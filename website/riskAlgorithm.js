@@ -1,5 +1,4 @@
-// DVT Risk Scoring Algorithm
-// Based on Kaggle DVT Dataset Analysis
+
 
 export function calculateRisk(fsr, hr, spo2, accel, motion) {
   let score = 0;

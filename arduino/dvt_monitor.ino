@@ -23,3 +23,31 @@ void setup() {
   mpu.initialize();
   Serial.println(F("OK"));
 }
+// Main Loop
+void loop() {
+  // Read FSR sensor
+  int fsrValue = analogRead(FSR_PIN);
+  
+  // Read MPU6050 acceleration
+  mpu.getAcceleration(&ax, &ay, &az);
+  accelMag = sqrt(
+    (ax/16384.0)*(ax/16384.0)+
+    (ay/16384.0)*(ay/16384.0)+
+    (az/16384.0)*(az/16384.0)
+  );
+  
+  // Detect motion
+  motion = (abs(accelMag - prevAccel) > 0.3) ? 1 : 0;
+  prevAccel = accelMag;
+  
+  // Send data to website
+  Serial.print(F("FSR:")); 
+  Serial.print(fsrValue);
+  Serial.print(F(",HR:75,SPO2:96"));
+  Serial.print(F(",ACCEL:")); 
+  Serial.print(accelMag, 2);
+  Serial.print(F(",MOTION:")); 
+  Serial.println(motion);
+  
+  delay(500);
+}

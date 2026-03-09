@@ -51,3 +51,18 @@ void loop() {
   
   delay(500);
 }
+// Receive motor commands from website
+  if (Serial.available() > 0) {
+    String cmd = Serial.readStringUntil('\n');
+    cmd.trim();
+    
+    if (cmd == "MOTOR:OFF") {
+      analogWrite(MOTOR_PIN, 0);
+    }
+    else if (cmd == "MOTOR:MEDIUM") {
+      analogWrite(MOTOR_PIN, 150);
+    }
+    else if (cmd == "MOTOR:HIGH") {
+      analogWrite(MOTOR_PIN, 255);
+    }
+  }
